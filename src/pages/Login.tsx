@@ -12,6 +12,7 @@ export function Login() {
           alt="InfraWatch"
           className="w-30 mx-auto invert brightness-0 mb-8"
         />
+
         <InputField type="email" placeholder="Email Corporativo" />
         <InputField type="password" placeholder="Password" />
 
@@ -21,7 +22,7 @@ export function Login() {
 
         <Button
           type="submit"
-          className="text-lg py-3 px-6 mb-6"
+          className="text-lg py-3 px-6"
         >
           Entrar
         </Button>
@@ -29,4 +30,3 @@ export function Login() {
     </LoginLayout>
   );
 }
-

@@ -16,3 +16,4 @@ export function LoginLayout({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
+
