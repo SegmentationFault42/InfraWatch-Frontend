@@ -2,11 +2,17 @@ import loginBack from "../assets/login-back.jpg";
 
 export function LoginLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex h-screen flex-col md:flex-row">
-      <div className="bg-primary flex items-center justify-center p-8 w-full md:w-[35%] md:max-w-[468px] min-h-[400px]">
+    <div className="flex h-screen flex-col sm:flex-row">
+      {/* Painel do login */}
+      <div className="
+        bg-primary flex items-center justify-center p-8 
+        w-full sm:w-1/2 md:w-[35%] md:max-w-[468px] min-h-screen
+      ">
         <div className="w-full max-w-sm">{children}</div>
       </div>
-      <div className="flex-1 w-full">
+
+      {/* Background */}
+      <div className="hidden sm:flex flex-1 w-1/2">
         <img
           src={loginBack}
           alt="Background"
