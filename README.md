@@ -1,69 +1,38 @@
-# React + TypeScript + Vite
+# 📊 InfraWatch Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+O **InfraWatch** é uma plataforma voltada para o **monitoramento de infraestruturas corporativas**, desenvolvida para oferecer uma experiência clara, intuitiva e orientada ao **utilizador final**.  
+Este repositório contém a interface frontend do projeto, construída com **Vite + React + TailwindCSS**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Objetivo
+Criar uma solução que permita às empresas:
+- Monitorar em tempo real suas infraestruturas críticas.
+- Visualizar métricas e indicadores de forma intuitiva.
+- Receber alertas e notificações sobre eventos relevantes.
+- Garantir maior **eficiência**, **segurança** e **confiabilidade** no ambiente corporativo.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠️ Tecnologias Utilizadas
+- ⚡ [Vite](https://vitejs.dev/) — Bundler rápido e moderno
+- ⚛️ [React](https://react.dev/) — Biblioteca para construção da UI
+- 🎨 [TailwindCSS](https://tailwindcss.com/) — Estilização eficiente e responsiva
+- 📏 [ESLint](https://eslint.org/) — Padrões e boas práticas no código
+- 🧩 TypeScript — Tipagem estática para maior robustez
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 📂 Estrutura do Projeto
+```bash
+InfraWatch-Frontend/
+├── public/             # Arquivos estáticos
+├── src/                # Código-fonte principal
+│   ├── assets/         # Imagens, ícones, etc.
+│   ├── components/     # Componentes reutilizáveis
+│   ├── pages/          # Páginas principais
+│   ├── App.tsx         # Componente raiz
+│   └── main.tsx        # Ponto de entrada
+├── package.json
+├── tailwind.config.js
+└── vite.config.ts
