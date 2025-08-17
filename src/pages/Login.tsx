@@ -10,17 +10,23 @@ export function Login() {
         <img
           src={Logo}
           alt="InfraWatch"
-          className="w-30 mx-auto invert brightness-1"
+          className="w-30 mx-auto invert brightness-0 mb-8"
         />
         <InputField type="email" placeholder="Email Corporativo" />
         <InputField type="password" placeholder="Password" />
 
-        <a href="#" className="text-sm text-gray-300 text-center">
+        <a href="#" className="text-sm text-gray-300 text-center mb-4">
           Esqueceu a password?
         </a>
 
-        <Button type="submit">Entrar</Button>
+        <Button
+          type="submit"
+          className="text-lg py-3 px-6 mb-6"
+        >
+          Entrar
+        </Button>
       </div>
     </LoginLayout>
   );
 }
+

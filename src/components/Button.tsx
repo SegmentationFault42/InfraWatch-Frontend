@@ -10,7 +10,12 @@ export function Button({ children, onClick, type = "button", className = "" }: P
     <button
       type={type}
       onClick={onClick}
-      className={`w-full rounded-full bg-white text-primary font-semibold py-2 px-4 hover:bg-gray-100 transition duration-200 ${className}`}
+      className={`
+        w-full rounded-full bg-white text-primary font-semibold py-3 px-6
+        hover:scale-102 hover:brightness-105 hover:shadow-lg
+        transition-all duration-300 ease-out
+        ${className}
+      `}
     >
       {children}
     </button>
