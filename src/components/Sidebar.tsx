@@ -13,10 +13,10 @@ export function Sidebar() {
 
   const items = [
     { name: "Dashboard", icon: Home, path: "/dashboard" },
-    { name: "Sistemas", icon: Activity, path: "/sistemas" },
-    { name: "Alertas", icon: Bell, path: "/alertas" },
+    { name: "Sistemas", icon: Activity, path: "/system" },
+    { name: "Alertas", icon: Bell, path: "/alerts" },
     { name: "SLA", icon: ListChecks, path: "/sla" },
-    { name: "Relatórios", icon: FileText, path: "/relatorios" },
+    { name: "Relatórios", icon: FileText, path: "/reports" },
   ];
 
   return (
