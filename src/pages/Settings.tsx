@@ -1,7 +1,15 @@
+import { useState } from "react";
 import { SettingsCard } from "../components/SettingsCard";
 import { SettingsLayout } from "../layouts/SettingsLayout";
+import { ProfileModal } from "../components/ProfileModal";
+import { AppearanceModal } from "../components/AppearanceModal";
+import { SecurityModal } from "../components/SecurityModal";
 
 export function Settings() {
+  const [openProfile, setOpenProfile] = useState(false);
+  const [openAppearance, setOpenAppearance] = useState(false);
+  const [openSecurity, setOpenSecurity] = useState(false);
+
   return (
     <SettingsLayout>
       <div className="p-6">
@@ -13,19 +21,33 @@ export function Settings() {
             title="Perfil"
             subtitle="Gerencie suas informações pessoais"
             icon="perfil"
+            onClick={() => setOpenProfile(true)}
           />
           <SettingsCard
             title="Aparência"
             subtitle="Personalize o visual do sistema"
             icon="aparencia"
+            onClick={() => setOpenAppearance(true)}
           />
           <SettingsCard
             title="Segurança"
             subtitle="Proteja sua conta e dados"
             icon="seguranca"
+            onClick={() => setOpenSecurity(true)}
           />
         </div>
       </div>
+
+      {/* Modais */}
+      <ProfileModal isOpen={openProfile} onClose={() => setOpenProfile(false)} />
+      <AppearanceModal
+        isOpen={openAppearance}
+        onClose={() => setOpenAppearance(false)}
+      />
+      <SecurityModal
+        isOpen={openSecurity}
+        onClose={() => setOpenSecurity(false)}
+      />
     </SettingsLayout>
   );
 }
