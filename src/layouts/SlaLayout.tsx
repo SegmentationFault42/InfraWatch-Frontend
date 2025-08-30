@@ -6,7 +6,7 @@ type Props = {
   children: ReactNode;
 };
 
-export default function SlaLayout({ children }: Props) {
+export function SlaLayout({ children }: Props) {
   return (
     <div className="flex flex-col h-screen bg-gray-50">
       <Header />

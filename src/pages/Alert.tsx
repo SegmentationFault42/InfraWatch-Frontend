@@ -1,4 +1,4 @@
-import AlertLayout from "../layouts/SlaLayout";
+import AlertLayout from "../layouts/AlertLayout";
 import { AlertTable } from "../components/AlertTable";
 import { StatCard } from "../components/StatCard";
 import { ShieldAlert, AlertTriangle, ShieldCheck } from "lucide-react";
