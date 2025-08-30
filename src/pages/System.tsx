@@ -8,14 +8,12 @@ export function System() {
   return (
     <SystemLayout>
       <div className="space-y-6">
-        {/* estatísticas */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <StatCard title="Sistemas Cadastrados" value="856" subtitle="Total de Sistemas em gerenciamento" color="blue" />
           <StatCard title="Sistemas em atividade" value="856" subtitle="Total de Sistemas em gerenciamento" color="green" />
           <StatCard title="Sistemas em mau funcionamento" value="856" subtitle="Total de Sistemas em gerenciamento" color="red" />
         </div>
 
-        {/* botão + pesquisa */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <Button className="!w-auto !px-5 !py-2.5 !rounded-md !bg-[#5b3cc4] !text-white shadow hover:bg-[#4a2ea1]">
             Cadastrar um novo sistema
@@ -36,7 +34,6 @@ export function System() {
           </div>
         </div>
 
-        {/* grid de cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <SystemCard title="Site institucional" status="down" host="192.168.18.1" lastCheck="há 50 segundos" />
           <SystemCard title="Site institucional" status="warning" host="192.168.18.1" lastCheck="há 50 segundos" />
@@ -46,7 +43,6 @@ export function System() {
           <SystemCard title="Site institucional" status="up" host="192.168.18.1" lastCheck="há 50 segundos" />
         </div>
 
-        {/* paginação */}
         <div className="flex items-center justify-between mt-6">
           <p className="text-sm text-gray-500">Página 1 de 100</p>
           <div className="flex items-center gap-2">

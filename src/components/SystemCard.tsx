@@ -32,7 +32,6 @@ export function SystemCard({ title, status, host, lastCheck }: Props) {
 
   return (
     <div className="bg-white border border-gray-200 p-5 rounded-xl shadow-md flex flex-col justify-between">
-      {/* Título + ícone no canto direito */}
       <div className="flex items-center justify-between">
         <h3 className="text-base font-semibold text-[#3a2e5e]">{title}</h3>
         {statusConfig[status].icon}
