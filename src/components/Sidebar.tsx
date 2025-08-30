@@ -5,6 +5,7 @@ import {
   FileText,
   Activity,
   Settings,
+  Terminal,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -17,6 +18,7 @@ export function Sidebar() {
     { name: "Alertas", icon: Bell, path: "/alerts" },
     { name: "SLA", icon: ListChecks, path: "/sla" },
     { name: "Relatórios", icon: FileText, path: "/reports" },
+    { name: "Logs", icon: Terminal, path: "/logs" },
   ];
 
   return (
@@ -30,7 +32,7 @@ export function Sidebar() {
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="flex flex-col leading-tight">
+          <div className="flex flex-col justify-center leading-tight">
             <span className="text-sm font-bold text-gray-900">Kiyotaka U.</span>
             <span className="text-xs text-gray-500 -mt-[2px]">Software Engineer</span>
           </div>
@@ -40,7 +42,7 @@ export function Sidebar() {
         </button>
       </div>
 
-      <nav className="flex-1 mt-2">
+      <nav className="flex-1 mt-2 overflow-y-auto">
         <ul>
           {items.map((item) => {
             const isActive =
@@ -73,7 +75,7 @@ export function Sidebar() {
         </ul>
       </nav>
 
-      <div className="p-6 border-t border-gray-100">
+      <div className="mt-auto p-6 border-t border-gray-100">
         <Link
           to="/config"
           className="flex items-center gap-2 text-sm text-gray-700 hover:text-violet-700 font-semibold transition-colors"
