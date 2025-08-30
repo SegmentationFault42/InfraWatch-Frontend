@@ -77,7 +77,7 @@ export function Sidebar() {
 
       <div className="mt-auto p-6 border-t border-gray-100">
         <Link
-          to="/config"
+          to="/settings"
           className="flex items-center gap-2 text-sm text-gray-700 hover:text-violet-700 font-semibold transition-colors"
         >
           <Settings size={18} />
