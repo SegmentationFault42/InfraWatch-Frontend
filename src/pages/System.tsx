@@ -1,21 +1,31 @@
+// src/pages/System.tsx
+import { useState } from "react";
 import { AppLayout } from "../layouts/AppLayout";
 import { StatCard } from "../components/StatCard";
 import { SystemCard } from "../components/SystemCard";
 import { Button } from "../components/Button";
-import { Search, SlidersHorizontal, ChevronLeft, ChevronRight } from "lucide-react";
+import { Search, SlidersHorizontal, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { SystemForm } from "../components/SystemForm";
 
 export function System() {
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
   return (
     <AppLayout>
       <div className="space-y-6">
+        {/* Estatísticas */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <StatCard title="Sistemas Cadastrados" value="856" subtitle="Total de Sistemas em gerenciamento" color="blue" />
           <StatCard title="Sistemas em atividade" value="856" subtitle="Total de Sistemas em gerenciamento" color="green" />
           <StatCard title="Sistemas em mau funcionamento" value="856" subtitle="Total de Sistemas em gerenciamento" color="red" />
         </div>
 
+        {/* Barra de ações */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <Button className="!w-auto !px-5 !py-2.5 !rounded-md !bg-[#5b3cc4] !text-white shadow hover:bg-[#4a2ea1]">
+          <Button
+            className="!w-auto !px-5 !py-2.5 !rounded-md !bg-[#5b3cc4] !text-white shadow hover:bg-[#4a2ea1]"
+            onClick={() => setIsFormOpen(true)}
+          >
             Cadastrar um novo sistema
           </Button>
 
@@ -34,6 +44,7 @@ export function System() {
           </div>
         </div>
 
+        {/* Lista de sistemas */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <SystemCard title="Site institucional" status="down" host="192.168.18.1" lastCheck="há 50 segundos" />
           <SystemCard title="Site institucional" status="warning" host="192.168.18.1" lastCheck="há 50 segundos" />
@@ -43,6 +54,7 @@ export function System() {
           <SystemCard title="Site institucional" status="up" host="192.168.18.1" lastCheck="há 50 segundos" />
         </div>
 
+        {/* Paginação */}
         <div className="flex items-center justify-between mt-6">
           <p className="text-sm text-gray-500">Página 1 de 100</p>
           <div className="flex items-center gap-2">
@@ -55,6 +67,27 @@ export function System() {
           </div>
         </div>
       </div>
+
+      {/* Modal/Formulário de cadastro */}
+      {isFormOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+          <div className="relative w-full max-w-2xl">
+            {/* Botão fechar */}
+            <button
+              onClick={() => setIsFormOpen(false)}
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+            >
+              <X size={20} />
+            </button>
+
+            {/* Formulário */}
+            <SystemForm 
+              isOpen={isFormOpen} 
+              onClose={() => setIsFormOpen(false)} 
+            />
+          </div>
+        </div>
+      )}
     </AppLayout>
   );
 }

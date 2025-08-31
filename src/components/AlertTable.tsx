@@ -5,7 +5,6 @@ interface AlertTableProps {
   data: any[];
 }
 
-// Variáveis de cores
 const colors = {
   background: "bg-white",
   tableHeaderText: "text-[var(--color-primary)]",
