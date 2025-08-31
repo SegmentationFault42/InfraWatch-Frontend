@@ -1,10 +1,10 @@
-import { SlaLayout } from "../layouts/SlaLayout";
+import { AppLayout } from "../layouts/AppLayout";
 import { StatCard } from "../components/StatCard";
 import { Button } from "../components/Button";
 
 export function Sla() {
   return (
-    <SlaLayout>
+    <AppLayout>
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <StatCard
@@ -32,6 +32,6 @@ export function Sla() {
           </Button>
         </div>
       </div>
-    </SlaLayout>
+    </AppLayout>
   );
 }

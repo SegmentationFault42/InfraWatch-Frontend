@@ -1,4 +1,4 @@
-import { DashboardLayout } from "../layouts/DashboardLayout";
+import { AppLayout } from "../layouts/AppLayout";
 import { StatCard } from "../components/StatCard";
 import { SystemTable } from "../components/SystemTable";
 import { ChartSLA } from "../components/ChartSLA";
@@ -8,7 +8,7 @@ import { ShieldAlert, AlertTriangle } from "lucide-react";
 
 export function Dashboard() {
   return (
-    <DashboardLayout>
+    <AppLayout>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <StatCard
           title="Sistemas ativos"
@@ -55,6 +55,6 @@ export function Dashboard() {
       </div>
 
       <ChartMonthly />
-    </DashboardLayout>
+    </AppLayout>
   );
 }

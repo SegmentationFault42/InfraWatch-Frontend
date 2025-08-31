@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/* Cores do tema */
 @theme {
   --color-primary: #3C2E6C;
   --color-secondary: #60A5FA;
@@ -8,4 +9,13 @@
   --color-danger: #EF4444;
   --color-background: #F9FAFB;
   --color-text: #111827;
+}
+
+/* Animação dropdown suave */
+@keyframes fadeSlide {
+  0% { opacity: 0; transform: translateY(5px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeSlide {
+  animation: fadeSlide 0.2s ease-out forwards;
 }

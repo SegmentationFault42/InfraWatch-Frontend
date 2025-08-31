@@ -1,4 +1,4 @@
-import AlertLayout from "../layouts/AlertLayout";
+import { AppLayout } from "../layouts/AppLayout";
 import { AlertTable } from "../components/AlertTable";
 import { StatCard } from "../components/StatCard";
 import { ShieldAlert, AlertTriangle, ShieldCheck } from "lucide-react";
@@ -15,7 +15,7 @@ export function Alert() {
   ];
 
   return (
-    <AlertLayout>
+    <AppLayout>
       <div className="space-y-6 w-full max-w-8xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <StatCard
@@ -62,6 +62,6 @@ export function Alert() {
         {/* Tabela de alertas */}
         <AlertTable data={alertData} />
       </div>
-    </AlertLayout>
+    </AppLayout>
   );
 }

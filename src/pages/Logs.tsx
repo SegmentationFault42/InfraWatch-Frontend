@@ -1,4 +1,4 @@
-import { LogsLayout } from "../layouts/LogsLayout";
+import { AppLayout } from "../layouts/AppLayout";
 import { StatCard } from "../components/StatCard";
 import { LogTable } from "../components/LogTable";
 
@@ -17,7 +17,7 @@ export function Logs() {
   ];
 
   return (
-    <LogsLayout>
+    <AppLayout>
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <StatCard
@@ -36,6 +36,6 @@ export function Logs() {
 
         <LogTable data={mockData} />
       </div>
-    </LogsLayout>
+    </AppLayout>
   );
 }

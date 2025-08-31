@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SettingsCard } from "../components/SettingsCard";
-import { SettingsLayout } from "../layouts/SettingsLayout";
+import { AppLayout } from "../layouts/AppLayout";
 import { ProfileModal } from "../components/ProfileModal";
 import { AppearanceModal } from "../components/AppearanceModal";
 import { SecurityModal } from "../components/SecurityModal";
@@ -11,7 +11,7 @@ export function Settings() {
   const [openSecurity, setOpenSecurity] = useState(false);
 
   return (
-    <SettingsLayout>
+    <AppLayout>
       <div className="p-6">
         <h1 className="text-2xl font-bold text-gray-900">Configurações</h1>
         <p className="text-gray-500 text-sm">Gerencie preferências do sistema</p>
@@ -48,6 +48,6 @@ export function Settings() {
         isOpen={openSecurity}
         onClose={() => setOpenSecurity(false)}
       />
-    </SettingsLayout>
+    </AppLayout>
   );
 }

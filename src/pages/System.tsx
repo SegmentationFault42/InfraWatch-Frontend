@@ -1,4 +1,4 @@
-import SystemLayout from "../layouts/SystemLayout";
+import { AppLayout } from "../layouts/AppLayout";
 import { StatCard } from "../components/StatCard";
 import { SystemCard } from "../components/SystemCard";
 import { Button } from "../components/Button";
@@ -6,7 +6,7 @@ import { Search, SlidersHorizontal, ChevronLeft, ChevronRight } from "lucide-rea
 
 export function System() {
   return (
-    <SystemLayout>
+    <AppLayout>
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <StatCard title="Sistemas Cadastrados" value="856" subtitle="Total de Sistemas em gerenciamento" color="blue" />
@@ -55,6 +55,6 @@ export function System() {
           </div>
         </div>
       </div>
-    </SystemLayout>
+    </AppLayout>
   );
 }

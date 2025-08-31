@@ -1,6 +1,6 @@
 // Report.tsx
 import { useState } from "react";
-import { ReportLayout } from "../layouts/ReportLayout";
+import { AppLayout } from "../layouts/AppLayout";
 import { StatCard } from "../components/StatCard";
 import { DateRangePicker } from "../components/DateRangePicker";
 import { ReportTable } from "../components/ReportTable";
@@ -18,7 +18,7 @@ export function Report() {
   ];
 
   return (
-    <ReportLayout>
+    <AppLayout>
       <div className="space-y-6">
         {/* Card */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -46,6 +46,6 @@ export function Report() {
         {/* Tabela */}
         <ReportTable data={mockData} />
       </div>
-    </ReportLayout>
+    </AppLayout>
   );
 }
