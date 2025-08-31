@@ -1,7 +1,24 @@
-// src/components/ProfileModal.tsx
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useRef, useState, useEffect } from "react";
 import { Pencil } from "lucide-react";
+
+// Paleta de cores
+const colors = {
+  overlayBg: "bg-black/40",
+  modalBg: "bg-white",
+  border: "border-gray-200",
+  title: "text-gray-900",
+  label: "text-gray-600",
+  inputBg: "bg-gray-100",
+  inputText: "text-gray-800",
+  placeholder: "placeholder-gray-500",
+  focusBorder: "focus:border-violet-500",
+  focusRing: "focus:ring-violet-500",
+  primary: "bg-violet-600 text-white",
+  primaryHover: "hover:bg-violet-700",
+  secondary: "bg-white text-violet-600 border-violet-600",
+  secondaryHover: "hover:bg-gray-100",
+};
 
 interface ProfileModalProps {
   isOpen: boolean;
@@ -19,7 +36,6 @@ export function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
   const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
   useEffect(() => {
-    // Simulação de buscar dados do usuário
     setTimeout(() => {
       setFormData({
         nome: "Kanagi Kazuya",
@@ -34,7 +50,6 @@ export function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
       const choice = window.confirm(
         "Deseja tirar uma foto agora? (Cancelar = escolher da galeria)"
       );
-
       if (choice) {
         fileInputRef.current?.setAttribute("capture", "environment");
         fileInputRef.current?.click();
@@ -60,7 +75,7 @@ export function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black/40 backdrop-blur-sm" />
+          <div className={`${colors.overlayBg} backdrop-blur-sm fixed inset-0`} />
         </Transition.Child>
 
         {/* Conteúdo */}
@@ -74,18 +89,15 @@ export function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
             leaveFrom="opacity-100 translate-y-0 scale-100"
             leaveTo="opacity-0 translate-y-6 scale-95"
           >
-            <Dialog.Panel className="w-full max-w-2xl rounded-2xl bg-white p-6 shadow-2xl border border-gray-200">
-              <Dialog.Title className="text-xl font-bold text-gray-900 mb-4">
+            <Dialog.Panel className={`w-full max-w-2xl rounded-2xl ${colors.modalBg} p-6 shadow-2xl border ${colors.border}`}>
+              <Dialog.Title className={`text-xl font-bold ${colors.title} mb-4`}>
                 Perfil do Usuário
               </Dialog.Title>
 
               <div className="flex flex-col md:flex-row md:items-center gap-8">
                 {/* Lado esquerdo - Imagem */}
                 <div className="flex justify-center md:w-1/3">
-                  <div
-                    className="relative group cursor-pointer"
-                    onClick={handleIconClick}
-                  >
+                  <div className="relative group cursor-pointer" onClick={handleIconClick}>
                     <img
                       src="https://images5.alphacoders.com/134/1345309.jpeg"
                       alt="Foto de perfil"
@@ -111,60 +123,40 @@ export function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
 
                 {/* Lado direito - Formulário */}
                 <div className="flex-1 space-y-5">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-1">
-                      Nome
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Digite seu nome"
-                      value={formData.nome}
-                      onChange={(e) =>
-                        setFormData({ ...formData, nome: e.target.value })
-                      }
-                      className="w-full rounded-lg border border-gray-300 bg-gray-100 text-gray-800 placeholder-gray-500 shadow-sm focus:border-violet-500 focus:ring-violet-500 px-3 py-2 transition"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-1">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      placeholder="Digite seu email"
-                      value={formData.email}
-                      onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
-                      }
-                      className="w-full rounded-lg border border-gray-300 bg-gray-100 text-gray-800 placeholder-gray-500 shadow-sm focus:border-violet-500 focus:ring-violet-500 px-3 py-2 transition"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-1">
-                      Data de Nascimento
-                    </label>
-                    <input
-                      type="date"
-                      value={formData.dataNascimento}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          dataNascimento: e.target.value,
-                        })
-                      }
-                      className="w-full rounded-lg border border-gray-300 bg-gray-100 text-gray-800 shadow-sm focus:border-violet-500 focus:ring-violet-500 px-3 py-2 transition"
-                    />
-                  </div>
+                  {["nome", "email", "dataNascimento"].map((field, idx) => (
+                    <div key={idx}>
+                      <label className={`block text-sm font-medium ${colors.label} mb-1`}>
+                        {field === "nome"
+                          ? "Nome"
+                          : field === "email"
+                          ? "Email"
+                          : "Data de Nascimento"}
+                      </label>
+                      <input
+                        type={field === "email" ? "email" : field === "dataNascimento" ? "date" : "text"}
+                        placeholder={
+                          field === "nome"
+                            ? "Digite seu nome"
+                            : field === "email"
+                            ? "Digite seu email"
+                            : ""
+                        }
+                        value={formData[field as keyof typeof formData]}
+                        onChange={(e) =>
+                          setFormData({ ...formData, [field]: e.target.value })
+                        }
+                        className={`w-full rounded-lg border ${colors.border} ${colors.inputBg} ${colors.inputText} ${colors.placeholder} shadow-sm focus:outline-none ${colors.focusBorder} ${colors.focusRing} px-3 py-2 transition`}
+                      />
+                    </div>
+                  ))}
 
                   <div className="flex gap-4 pt-6">
-                    <button className="flex-1 py-2 rounded-lg border border-white bg-violet-600 text-white font-medium hover:bg-violet-700 transition">
+                    <button className={`flex-1 py-2 rounded-lg border border-white ${colors.primary} font-medium ${colors.primaryHover} transition`}>
                       Atualizar
                     </button>
                     <button
                       onClick={onClose}
-                      className="flex-1 py-2 rounded-lg border border-violet-600 bg-white text-violet-600 font-medium hover:bg-gray-100 transition"
+                      className={`flex-1 py-2 rounded-lg border ${colors.secondary} font-medium ${colors.secondaryHover} transition`}
                     >
                       Descartar
                     </button>

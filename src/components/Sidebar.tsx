@@ -1,4 +1,3 @@
-// src/components/Sidebar.tsx
 import {
   Home, Bell, ListChecks, FileText, Activity,
   Settings, Terminal, User, LogOut, Edit2
@@ -6,6 +5,27 @@ import {
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { ProfileModal } from "./ProfileModal";
+
+// Paleta de cores
+const colors = {
+  sidebarBg: "bg-white",
+  sidebarBorder: "border-gray-100",
+  overlay: "bg-black/20",
+  userName: "text-gray-900",
+  userRole: "text-gray-500",
+  userPlaceholder: "bg-gray-300",
+  iconDefault: "text-gray-500",
+  iconActive: "text-[#5b3cc4]",
+  linkText: "text-gray-700",
+  linkActiveBg: "bg-[#f4f0fa]",
+  linkActiveBorder: "border-[#5b3cc4]",
+  linkHoverBg: "hover:bg-gray-100",
+  dropdownBg: "bg-white",
+  dropdownBorder: "border-gray-200",
+  dropdownHover: "hover:bg-gray-100",
+  logoutText: "text-red-500",
+  logoutHoverBg: "hover:bg-red-50",
+};
 
 interface SidebarProps {
   isOpen?: boolean;
@@ -67,11 +87,11 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
   return (
     <>
       {/* Sidebar Desktop */}
-      <aside className={`fixed top-16 left-0 h-[calc(100vh-4rem)] w-64 bg-white border-r border-gray-100 flex flex-col z-40 lg:translate-x-0 transform transition-transform duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
+      <aside className={`fixed top-16 left-0 h-[calc(100vh-4rem)] w-64 ${colors.sidebarBg} border-r ${colors.sidebarBorder} flex flex-col z-40 lg:translate-x-0 transform transition-transform duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
         {/* Topo */}
         <div className="px-6 pt-6 pb-3 flex items-center justify-between relative">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-gray-300 rounded-full overflow-hidden flex items-center justify-center">
+            <div className={`w-12 h-12 ${colors.userPlaceholder} rounded-full overflow-hidden flex items-center justify-center`}>
               {!imgError ? (
                 <img
                   src="https://images5.alphacoders.com/134/1345309.jpeg"
@@ -80,12 +100,12 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                   onError={() => setImgError(true)}
                 />
               ) : (
-                <User size={28} className="text-gray-500" />
+                <User size={28} className={colors.iconDefault} />
               )}
             </div>
             <div className="flex flex-col justify-center leading-tight">
-              <span className="text-sm font-bold text-gray-900">Kiyotaka U.</span>
-              <span className="text-xs text-gray-500 -mt-[2px]">Software Engineer</span>
+              <span className={`text-sm font-bold ${colors.userName}`}>Kiyotaka U.</span>
+              <span className={`text-xs -mt-[2px] ${colors.userRole}`}>Software Engineer</span>
             </div>
           </div>
 
@@ -115,11 +135,11 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                     to={item.path}
                     className={`group flex items-center gap-3 px-6 py-3 text-sm font-semibold transition-all w-full ${
                       isActive
-                        ? "bg-[#f4f0fa] text-[#5b3cc4] border-l-4 border-[#5b3cc4]"
-                        : "text-gray-700 hover:bg-gray-100 border-l-4 border-transparent"
+                        ? `${colors.linkActiveBg} ${colors.iconActive} border-l-4 ${colors.linkActiveBorder}`
+                        : `${colors.linkText} ${colors.linkHoverBg} border-l-4 border-transparent`
                     }`}
                   >
-                    <Icon size={18} className={`${isActive ? "text-[#5b3cc4]" : "text-gray-500"}`} />
+                    <Icon size={18} className={`${isActive ? colors.iconActive : colors.iconDefault}`} />
                     <span>{item.name}</span>
                   </Link>
                 </li>
@@ -134,11 +154,11 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             to="/settings"
             className={`flex items-center gap-2 px-6 py-3 w-full text-sm font-semibold transition-all ${
               location.pathname === "/settings"
-                ? "bg-[#f4f0fa] text-[#5b3cc4] border-l-4 border-[#5b3cc4]"
-                : "text-gray-700 hover:bg-gray-100 border-l-4 border-transparent"
+                ? `${colors.linkActiveBg} ${colors.iconActive} border-l-4 ${colors.linkActiveBorder}`
+                : `${colors.linkText} ${colors.linkHoverBg} border-l-4 border-transparent`
             }`}
           >
-            <Settings size={18} className={location.pathname === "/settings" ? "text-[#5b3cc4]" : "text-gray-500"} />
+            <Settings size={18} className={location.pathname === "/settings" ? colors.iconActive : colors.iconDefault} />
             Configurações
           </Link>
         </div>
@@ -147,7 +167,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
       {/* Overlay tablet/mobile */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/20 lg:hidden z-30"
+          className={`fixed inset-0 ${colors.overlay} lg:hidden z-30`}
           onClick={onClose}
         />
       )}
@@ -156,21 +176,21 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
       {menuOpen && (
         <div
           ref={menuRef}
-          className="fixed bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden animate-fadeSlide z-50"
+          className={`fixed ${colors.dropdownBg} border ${colors.dropdownBorder} rounded-lg shadow-lg overflow-hidden animate-fadeSlide z-50`}
           style={{ top: `${menuPosition.top}px`, left: `${menuPosition.left}px`, width: "200px" }}
         >
           <button
             onClick={() => { setProfileModalOpen(true); setMenuOpen(false); }}
-            className="flex items-center gap-2 px-4 py-3 w-full hover:bg-gray-100 transition"
+            className={`flex items-center gap-2 px-4 py-3 w-full ${colors.dropdownHover} transition`}
           >
-            <Edit2 size={18} className="text-gray-600" />
+            <Edit2 size={18} className={colors.iconDefault} />
             Editar Perfil
           </button>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-3 w-full text-red-500 hover:bg-red-50 transition"
+            className={`flex items-center gap-2 px-4 py-3 w-full ${colors.logoutText} ${colors.logoutHoverBg} transition`}
           >
-            <LogOut size={18} className="text-red-500" />
+            <LogOut size={18} className={colors.logoutText} />
             Logout
           </button>
         </div>

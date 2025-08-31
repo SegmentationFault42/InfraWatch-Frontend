@@ -7,11 +7,22 @@ interface AlertCardProps {
   color?: string;
 }
 
-export function AlertCard({ title, value, icon, color = "text-gray-700" }: AlertCardProps) {
+const colors = {
+  textDefault: "text-gray-700",
+  textTitle: "text-gray-500",
+  background: "bg-white",
+};
+
+export function AlertCard({
+  title,
+  value,
+  icon,
+  color = colors.textDefault,
+}: AlertCardProps) {
   return (
-    <div className="bg-white p-4 rounded-lg shadow-sm flex items-center justify-between">
+    <div className={`p-4 rounded-lg shadow-sm flex items-center justify-between ${colors.background}`}>
       <div>
-        <p className="text-xs text-gray-500">{title}</p>
+        <p className={`text-xs ${colors.textTitle}`}>{title}</p>
         <p className={`text-xl font-bold ${color}`}>{value}</p>
       </div>
       {icon && <div className="text-2xl">{icon}</div>}
