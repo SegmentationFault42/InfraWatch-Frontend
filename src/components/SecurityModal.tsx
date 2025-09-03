@@ -1,6 +1,7 @@
 // src/components/SecurityModal.tsx
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import { useProfile } from "../hooks/useProfile";
 
 // Paleta de cores
 const colors = {
@@ -25,20 +26,37 @@ interface SecurityModalProps {
 }
 
 export function SecurityModal({ isOpen, onClose }: SecurityModalProps) {
+  const { updatePassword } = useProfile();
   const [formData, setFormData] = useState({
     oldPassword: "",
     newPassword: "",
     confirmPassword: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (formData.newPassword !== formData.confirmPassword) {
       alert("As senhas não coincidem!");
       return;
     }
-    console.log("Senha antiga:", formData.oldPassword);
-    console.log("Nova senha:", formData.newPassword);
-    onClose();
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      await updatePassword({
+        oldPassword: formData.oldPassword,
+        newPassword: formData.newPassword,
+      });
+      alert("Senha alterada com sucesso!");
+      onClose();
+      setFormData({ oldPassword: "", newPassword: "", confirmPassword: "" });
+    } catch (err: any) {
+      setError(err.response?.data?.message || "Erro ao alterar a senha");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -92,20 +110,23 @@ export function SecurityModal({ isOpen, onClose }: SecurityModalProps) {
                     className={`w-full rounded-lg border ${colors.border} ${colors.inputBg} ${colors.inputText} ${colors.placeholder} shadow-sm focus:outline-none ${colors.focusBorder} ${colors.focusRing} px-4 py-3 transition duration-300 hover:brightness-105`}
                   />
                 ))}
+                {error && <p className="text-red-500 text-sm">{error}</p>}
               </div>
 
               <div className="flex gap-4 pt-8">
                 <button
                   onClick={onClose}
                   className={`flex-1 py-3 rounded-lg border ${colors.secondary} font-medium ${colors.secondaryHover} transition duration-300`}
+                  disabled={loading}
                 >
                   Cancelar
                 </button>
                 <button
                   onClick={handleSave}
                   className={`flex-1 py-3 rounded-lg border border-white ${colors.primary} font-medium ${colors.primaryHover} shadow transition duration-300`}
+                  disabled={loading}
                 >
-                  Guardar
+                  {loading ? "Salvando..." : "Guardar"}
                 </button>
               </div>
             </Dialog.Panel>

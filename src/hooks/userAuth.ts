@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { login as loginService, logout as logoutService } from "../services/authService";
 
-export function userAuth() {
+export function useAuth() {
   const [user, setUser] = useState(() => {
     const saved = localStorage.getItem("user");
     return saved ? JSON.parse(saved) : null;

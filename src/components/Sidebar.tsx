@@ -5,6 +5,7 @@ import {
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { ProfileModal } from "./ProfileModal";
+import { useProfile } from "../hooks/useProfile";
 
 // Paleta de cores
 const colors = {
@@ -35,6 +36,8 @@ interface SidebarProps {
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const location = useLocation();
   const navigate = useNavigate();
+  const { user } = useProfile();
+
   const [imgError, setImgError] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileModalOpen, setProfileModalOpen] = useState(false);
@@ -84,6 +87,14 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
     setMenuOpen(true);
   };
 
+  // Formata o nome do usuário para "Primeiro N.": apenas a inicial do último sobrenome
+  const formatUserName = () => {
+    if (!user) return "Carregando...";
+    const first = user.firstName || "";
+    const lastInitial = user.lastName ? `${user.lastName[0]}.` : "";
+    return `${first} ${lastInitial}`;
+  };
+
   return (
     <>
       {/* Sidebar Desktop */}
@@ -94,8 +105,8 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             <div className={`w-12 h-12 ${colors.userPlaceholder} rounded-full overflow-hidden flex items-center justify-center`}>
               {!imgError ? (
                 <img
-                  src="https://images5.alphacoders.com/134/1345309.jpeg"
-                  alt="Kiyotaka U."
+                  src={user?.profileImageUrl || "https://images5.alphacoders.com/134/1345309.jpeg"}
+                  alt={`${user?.firstName} ${user?.lastName}`}
                   className="w-full h-full object-cover"
                   onError={() => setImgError(true)}
                 />
@@ -104,8 +115,12 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
               )}
             </div>
             <div className="flex flex-col justify-center leading-tight">
-              <span className={`text-sm font-bold ${colors.userName}`}>Kiyotaka U.</span>
-              <span className={`text-xs -mt-[2px] ${colors.userRole}`}>Software Engineer</span>
+              <span className={`text-sm font-bold ${colors.userName}`}>
+                {formatUserName()}
+              </span>
+              <span className={`text-xs -mt-[2px] ${colors.userRole}`}>
+                {user?.role || "Carregando..."}
+              </span>
             </div>
           </div>
 

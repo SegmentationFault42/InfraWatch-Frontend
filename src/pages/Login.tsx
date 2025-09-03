@@ -4,10 +4,10 @@ import { Button } from "../components/Button";
 import { LoginLayout } from "../layouts/LoginLayout";
 import { InputField } from "../components/InputField";
 import Logo from "../assets/Logo-name-violet.svg";
-import { userAuth } from "../hooks/userAuth";
+import { useAuth } from "../hooks/userAuth";
 
 export function Login() {
-  const { login, loading, error } = userAuth();
+  const { login, loading, error } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -15,18 +15,19 @@ export function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      alert(`Email: ${email}\nPassword: ${password}`);
       await login(email, password);
       navigate("/dashboard");
     } catch (err) {
-      alert(err);
       console.error(err);
     }
   };
 
   return (
     <LoginLayout>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-6 w-full max-w-md mx-auto">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-6 w-full max-w-md mx-auto"
+      >
         <img
           src={Logo}
           alt="InfraWatch"
@@ -59,9 +60,7 @@ export function Login() {
           {loading ? "Entrando..." : "Entrar"}
         </Button>
 
-        {error && (
-          <p className="text-red-500 text-center text-sm">{error}</p>
-        )}
+        {error && <p className="text-red-500 text-center text-sm">{error}</p>}
       </form>
     </LoginLayout>
   );

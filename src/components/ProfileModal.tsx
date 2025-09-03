@@ -1,6 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useRef, useState, useEffect } from "react";
 import { Pencil } from "lucide-react";
+import { useProfile } from "../hooks/useProfile";
 
 // Paleta de cores
 const colors = {
@@ -27,23 +28,23 @@ interface ProfileModalProps {
 
 export function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [formData, setFormData] = useState({
-    nome: "",
-    email: "",
-    dataNascimento: "",
-  });
+  const { user, update, loading, error } = useProfile();
+
+  const [firstName, setFirstName] = useState(user?.firstName || "");
+  const [lastName, setLastName] = useState(user?.lastName || "");
+  const [email, setEmail] = useState(user?.email || "");
+  const [profileImageUrl, setProfileImageUrl] = useState(user?.profileImageUrl || "");
 
   const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
   useEffect(() => {
-    setTimeout(() => {
-      setFormData({
-        nome: "Kanagi Kazuya",
-        email: "kazuya@example.com",
-        dataNascimento: "2000-05-15",
-      });
-    }, 500);
-  }, []);
+    if (user) {
+      setFirstName(user.firstName);
+      setLastName(user.lastName);
+      setEmail(user.email);
+      setProfileImageUrl(user.profileImageUrl || "");
+    }
+  }, [user]);
 
   const handleIconClick = () => {
     if (isMobile) {
@@ -59,6 +60,17 @@ export function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
       }
     } else {
       fileInputRef.current?.click();
+    }
+  };
+
+  const handleSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await update({ firstName, lastName, email, profileImageUrl });
+      alert("Perfil atualizado com sucesso!");
+      onClose();
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -99,7 +111,7 @@ export function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
                 <div className="flex justify-center md:w-1/3">
                   <div className="relative group cursor-pointer" onClick={handleIconClick}>
                     <img
-                      src="https://images5.alphacoders.com/134/1345309.jpeg"
+                      src={profileImageUrl || "https://images5.alphacoders.com/134/1345309.jpeg"}
                       alt="Foto de perfil"
                       className="w-40 h-40 rounded-full object-cover border-4 border-violet-500 transition duration-300 group-hover:brightness-75"
                     />
@@ -115,6 +127,8 @@ export function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
                     className="hidden"
                     onChange={(e) => {
                       if (e.target.files && e.target.files[0]) {
+                        const fileUrl = URL.createObjectURL(e.target.files[0]);
+                        setProfileImageUrl(fileUrl);
                         console.log("Arquivo selecionado:", e.target.files[0]);
                       }
                     }}
@@ -123,36 +137,35 @@ export function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
 
                 {/* Lado direito - Formulário */}
                 <div className="flex-1 space-y-5">
-                  {["nome", "email", "dataNascimento"].map((field, idx) => (
+                  {[
+                    { label: "Nome", value: firstName, setValue: setFirstName },
+                    { label: "Sobrenome", value: lastName, setValue: setLastName },
+                    { label: "Email", value: email, setValue: setEmail, type: "email" },
+                  ].map((field, idx) => (
                     <div key={idx}>
                       <label className={`block text-sm font-medium ${colors.label} mb-1`}>
-                        {field === "nome"
-                          ? "Nome"
-                          : field === "email"
-                          ? "Email"
-                          : "Data de Nascimento"}
+                        {field.label}
                       </label>
                       <input
-                        type={field === "email" ? "email" : field === "dataNascimento" ? "date" : "text"}
-                        placeholder={
-                          field === "nome"
-                            ? "Digite seu nome"
-                            : field === "email"
-                            ? "Digite seu email"
-                            : ""
-                        }
-                        value={formData[field as keyof typeof formData]}
-                        onChange={(e) =>
-                          setFormData({ ...formData, [field]: e.target.value })
-                        }
+                        type={field.type || "text"}
+                        placeholder={`Digite seu ${field.label.toLowerCase()}`}
+                        value={field.value}
+                        onChange={(e) => field.setValue(e.target.value)}
                         className={`w-full rounded-lg border ${colors.border} ${colors.inputBg} ${colors.inputText} ${colors.placeholder} shadow-sm focus:outline-none ${colors.focusBorder} ${colors.focusRing} px-3 py-2 transition`}
                       />
                     </div>
                   ))}
 
+                  {error && <p className="text-red-500 text-sm">{error}</p>}
+
                   <div className="flex gap-4 pt-6">
-                    <button className={`flex-1 py-2 rounded-lg border border-white ${colors.primary} font-medium ${colors.primaryHover} transition`}>
-                      Atualizar
+                    <button
+                      type="button"
+                      onClick={handleSave}
+                      className={`flex-1 py-2 rounded-lg border border-white ${colors.primary} font-medium ${colors.primaryHover} transition`}
+                      disabled={loading}
+                    >
+                      {loading ? "Atualizando..." : "Atualizar"}
                     </button>
                     <button
                       onClick={onClose}
